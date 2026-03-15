@@ -17,6 +17,7 @@ add_library(prometheus
     stmt.hpp stmt.cpp
     expr.hpp expr.cpp
     const.hpp const.cpp
+    type.hpp type.cpp
     prometheus prometheus.cpp)
 
 target_include_directories(prometheus PUBLIC ext/binaryen/src)

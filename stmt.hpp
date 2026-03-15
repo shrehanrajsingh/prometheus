@@ -25,6 +25,8 @@ public:
 class stmt_fundecl : public stmt_t
 {
 public:
+  expr_t *name;
+
   stmt_fundecl () : stmt_t (stmt_type::FUN_DECL) {}
   ~stmt_fundecl () {}
 };
