@@ -3,9 +3,9 @@
 
 #include "header.hpp"
 
-namespace wl
+namespace pm
 {
 WL_API std::vector<uint8_t> compile_to_wasm (const std::string &);
-} // namespace wl
+} // namespace pm
 
 #endif // CODEGEN_H

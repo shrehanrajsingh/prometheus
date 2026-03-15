@@ -1,6 +1,6 @@
 #include "token.hpp"
 
-namespace wl
+namespace pm
 {
 bool
 is_keyword (std::string_view s)
@@ -255,4 +255,4 @@ print_token (const token *t)
     }
   printf ("\n");
 }
-} // namespace wl
+} // namespace pm

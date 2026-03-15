@@ -4,7 +4,7 @@
 #include "expr.hpp"
 #include "header.hpp"
 
-namespace wl
+namespace pm
 {
 enum class stmt_type
 {
@@ -48,6 +48,6 @@ public:
   stmt_return () : stmt_t (stmt_type::RETURN) {}
   ~stmt_return () {}
 };
-} // namespace wl
+} // namespace pm
 
 #endif // STMT_H

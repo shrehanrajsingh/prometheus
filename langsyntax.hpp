@@ -3,7 +3,7 @@
 
 #include "header.hpp"
 
-namespace wl
+namespace pm
 {
 class ls_sm
 {
@@ -55,6 +55,6 @@ public:
     return *--code;
   }
 };
-} // namespace wl
+} // namespace pm
 
 #endif // LANGSYNTAX_H

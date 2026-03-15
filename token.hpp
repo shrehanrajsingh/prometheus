@@ -4,7 +4,7 @@
 #include "header.hpp"
 #include "langsyntax.hpp"
 
-namespace wl
+namespace pm
 {
 enum class tok_type
 {
@@ -100,6 +100,6 @@ public:
 
 void print_tok_type (tok_type);
 void print_token (const token *);
-} // namespace wl
+} // namespace pm
 
 #endif // AST_H

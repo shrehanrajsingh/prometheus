@@ -1,10 +1,10 @@
-#include <wlang.hpp>
+#include <prometheus.hpp>
 
 void
 test1 ()
 {
   std::string d = "";
-  auto o = wl::compile_to_wasm (d);
+  auto o = pm::compile_to_wasm (d);
 
   FILE *fptr = fopen ("../../tests/out.wasm", "wb");
   fwrite (o.data (), 1, o.size (), fptr);
@@ -29,14 +29,14 @@ test2 ()
 
   std::string s = ss.str ();
 
-  wl::tok_sm tksm (const_cast<char *> (s.c_str ()));
+  pm::tok_sm tksm (const_cast<char *> (s.c_str ()));
   tksm.gen ();
 
-  std::vector<wl::token *> &toks = tksm.result;
+  std::vector<pm::token *> &toks = tksm.result;
 
   for (auto &&i : toks)
     {
-      wl::print_token (i);
+      pm::print_token (i);
     }
 }
 

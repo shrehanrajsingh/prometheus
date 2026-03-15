@@ -3,7 +3,7 @@
 
 #include "header.hpp"
 
-namespace wl
+namespace pm
 {
 enum class const_type
 {
@@ -183,6 +183,6 @@ public:
   const_nulltype () : const_t (const_type::NULL_TYPE) {}
   ~const_nulltype () {}
 };
-} // namespace wl
+} // namespace pm
 
 #endif // CONST_H

@@ -1,6 +1,6 @@
 #include "codegen.hpp"
 
-namespace wl
+namespace pm
 {
 WL_API std::vector<uint8_t>
 compile_to_wasm (const std::string &a)
@@ -35,4 +35,4 @@ compile_to_wasm (const std::string &a)
 
   return wasm_bytes;
 }
-} // namespace wl
+} // namespace pm

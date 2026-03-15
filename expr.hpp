@@ -4,7 +4,7 @@
 #include "const.hpp"
 #include "header.hpp"
 
-namespace wl
+namespace pm
 {
 enum class expr_type
 {
@@ -60,6 +60,6 @@ public:
   expr_const (const_t *_Val) : expr_t (expr_type::CONST), val{ _Val } {}
   ~expr_const () {}
 };
-} // namespace wl
+} // namespace pm
 
 #endif // EXPR_H
