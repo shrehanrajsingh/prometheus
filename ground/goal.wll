@@ -1,0 +1,50 @@
+fun add -> i32
+    a: i32
+    b: i32
+-
+    c = a + b
+    d: i64 = a + b + c
+    return c
+-
+
+fun fib -> i32
+    n: i32
+-
+    if n < 2
+        return n
+    
+    return fib (n - 1) + fib (n - 2)
+-
+
+fun tower_of_hanoi -> null
+    n: i32
+    s: char
+    d: char
+    a: char
+-
+    if n == 1
+    -
+        print ('Move disk {n} from {s} to {d}')
+        return null
+    -
+
+    tower_of_hanoi (n - 1, s, a, d)
+    print ('Move disk {n} from {s} to {d}')
+    tower_of_hanoi (n - 1, a, d, s)
+-
+
+type Student
+-
+    name: char[]
+    age: i32
+-
+
+fun Student.new -> Student
+    name: char[]
+    age: i32
+-
+    return Student (
+        .name = name,
+        .age = age
+    )
+-
