@@ -78,12 +78,12 @@ public:
   ~pm_type () {}
 };
 
-using i32 = pm_type<int32_t, pm_type_kind::I32>;
-using i64 = pm_type<int64_t, pm_type_kind::I64>;
-using u32 = pm_type<uint32_t, pm_type_kind::U32>;
-using u64 = pm_type<uint64_t, pm_type_kind::U64>;
-using chr = pm_type<char, pm_type_kind::CHAR>;
-using boolean = pm_type<bool, pm_type_kind::BOOL>;
+using ty_i32 = pm_type<int32_t, pm_type_kind::I32>;
+using ty_i64 = pm_type<int64_t, pm_type_kind::I64>;
+using ty_u32 = pm_type<uint32_t, pm_type_kind::U32>;
+using ty_u64 = pm_type<uint64_t, pm_type_kind::U64>;
+using ty_chr = pm_type<char, pm_type_kind::CHAR>;
+using ty_boolean = pm_type<bool, pm_type_kind::BOOL>;
 } // namespace pm
 
 #endif // PM_TYPE_H
