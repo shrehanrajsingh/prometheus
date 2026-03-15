@@ -5,7 +5,6 @@
 
 namespace pm
 {
-
 enum class pm_type_kind
 {
   I32,
@@ -16,27 +15,26 @@ enum class pm_type_kind
   BOOL,
 };
 
-template <typename T, pm_type_kind _Type_Kind> class pm_type
+template <pm_type_kind _Type_Kind> class pm_type;
+
+template <> class pm_type<pm_type_kind::I32>
 {
+public:
+  using storage_type = int32_t;
+  static constexpr pm_type_kind kind = pm_type_kind::I32;
+
 private:
-  T val;
-  static constexpr pm_type_kind kind = _Type_Kind;
+  storage_type val;
 
 public:
   pm_type () = default;
 
-  pm_type (T _Val) : val{ _Val } {}
+  pm_type (storage_type _Val) : val{ _Val } {}
 
-  T
+  storage_type
   get () const
   {
     return val;
-  }
-
-  void
-  set (T _Val)
-  {
-    val = _Val;
   }
 
   bool
@@ -46,9 +44,36 @@ public:
   }
 
   bool
-  operator!= (const pm_type &other) const
+  operator< (const pm_type &other) const
   {
-    return val != other.val;
+    return val < other.val;
+  }
+};
+
+template <> class pm_type<pm_type_kind::I64>
+{
+public:
+  using storage_type = int64_t;
+  static constexpr pm_type_kind kind = pm_type_kind::I64;
+
+private:
+  storage_type val;
+
+public:
+  pm_type () = default;
+
+  pm_type (storage_type _Val) : val{ _Val } {}
+
+  storage_type
+  get () const
+  {
+    return val;
+  }
+
+  bool
+  operator== (const pm_type &other) const
+  {
+    return val == other.val;
   }
 
   bool
@@ -56,34 +81,94 @@ public:
   {
     return val < other.val;
   }
-
-  bool
-  operator> (const pm_type &other) const
-  {
-    return val > other.val;
-  }
-
-  bool
-  operator<= (const pm_type &other) const
-  {
-    return val <= other.val;
-  }
-
-  bool
-  operator>= (const pm_type &other) const
-  {
-    return val >= other.val;
-  }
-
-  ~pm_type () {}
 };
 
-using ty_i32 = pm_type<int32_t, pm_type_kind::I32>;
-using ty_i64 = pm_type<int64_t, pm_type_kind::I64>;
-using ty_u32 = pm_type<uint32_t, pm_type_kind::U32>;
-using ty_u64 = pm_type<uint64_t, pm_type_kind::U64>;
-using ty_chr = pm_type<char, pm_type_kind::CHAR>;
-using ty_boolean = pm_type<bool, pm_type_kind::BOOL>;
+template <> class pm_type<pm_type_kind::BOOL>
+{
+public:
+  using storage_type = bool;
+  static constexpr pm_type_kind kind = pm_type_kind::BOOL;
+
+private:
+  storage_type val;
+
+public:
+  pm_type () = default;
+  pm_type (storage_type _Val) : val{ _Val } {}
+
+  storage_type
+  get () const
+  {
+    return val;
+  }
+};
+
+template <> class pm_type<pm_type_kind::U32>
+{
+public:
+  using storage_type = uint32_t;
+  static constexpr pm_type_kind kind = pm_type_kind::U32;
+
+private:
+  storage_type val;
+
+public:
+  pm_type () = default;
+
+  pm_type (storage_type _Val) : val{ _Val } {}
+
+  storage_type
+  get () const
+  {
+    return val;
+  }
+
+  bool
+  operator== (const pm_type &other) const
+  {
+    return val == other.val;
+  }
+
+  bool
+  operator< (const pm_type &other) const
+  {
+    return val < other.val;
+  }
+};
+
+template <> class pm_type<pm_type_kind::U64>
+{
+public:
+  using storage_type = uint64_t;
+  static constexpr pm_type_kind kind = pm_type_kind::U64;
+
+private:
+  storage_type val;
+
+public:
+  pm_type () = default;
+
+  pm_type (storage_type _Val) : val{ _Val } {}
+
+  storage_type
+  get () const
+  {
+    return val;
+  }
+
+  bool
+  operator== (const pm_type &other) const
+  {
+    return val == other.val;
+  }
+
+  bool
+  operator< (const pm_type &other) const
+  {
+    return val < other.val;
+  }
+};
+
 } // namespace pm
 
 #endif // PM_TYPE_H
