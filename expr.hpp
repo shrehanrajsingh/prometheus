@@ -53,10 +53,6 @@ public:
   const_t *val;
 
   expr_const () : expr_t (expr_type::CONST), val{ nullptr } {}
-  expr_const (const_t _Val) : expr_t (expr_type::CONST), val (new const_t)
-  {
-    *val = _Val;
-  }
   expr_const (const_t *_Val) : expr_t (expr_type::CONST), val{ _Val } {}
   ~expr_const () {}
 };

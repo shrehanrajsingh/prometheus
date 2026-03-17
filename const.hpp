@@ -183,6 +183,8 @@ public:
   const_nulltype () : const_t (const_type::NULL_TYPE) {}
   ~const_nulltype () {}
 };
+
+void print_constt (const const_t *);
 } // namespace pm
 
 #endif // CONST_H

@@ -21,7 +21,7 @@ public:
   ast_sm (token **_Toks) : t{ _Toks }, ti{ 0 } {}
   ~ast_sm () {}
 
-  expr_t *gen_expr (token *, token *);
+  expr_t *gen_expr (token **, token **);
 
   stmt_t *gen_one ();
   void gen ();

@@ -1,6 +1,7 @@
 #if !defined(TOKEN_H)
 #define TOKEN_H
 
+#include "const.hpp"
 #include "header.hpp"
 #include "langsyntax.hpp"
 
@@ -14,6 +15,7 @@ enum class tok_type
   OPERATOR = 3,
   BLOCK_SCOPE = 4, /* block starter (- ... -) */
   TOK_NL = 5,
+  TOK_CONST = 6,
   TOK_EOF,
 };
 
@@ -89,6 +91,16 @@ public:
   ~tok_eof () {}
 };
 
+class tok_const : public token
+{
+public:
+  const_t *c;
+
+  tok_const () : token (tok_type::TOK_CONST) {}
+  tok_const (const_t *_C) : token (tok_type::TOK_CONST), c{ _C } {}
+  ~tok_const () {}
+};
+
 /* state machine */
 class tok_sm
 {
@@ -103,7 +115,7 @@ public:
   ~tok_sm () {}
 };
 
-void print_tok_type (tok_type);
+void print_tok_type (const tok_type);
 void print_token (const token *);
 } // namespace pm
 

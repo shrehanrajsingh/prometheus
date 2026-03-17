@@ -62,15 +62,49 @@ tok_sm::gen_one ()
 
   bool saw_var = false;
   bool saw_op = false;
+  bool saw_num = false;
+  bool saw_dot = false;
 
   char var[128] = { 0 };
   char op[32] = { 0 };
+  char num[128] = { 0 };
 
   size_t oc = 0;
   size_t vc = 0;
+  segsz_t nc = 0;
 
   while (d != '\0')
     {
+      if (saw_num || (!saw_var && isnumber (d)))
+        {
+          if (!saw_num)
+            saw_num = true;
+
+          if (!isnumber (d) && d != '.')
+            {
+              num[nc] = '\0';
+
+              return new tok_const (new const_int (num, nc));
+            }
+
+          num[nc++] = d;
+        }
+
+      if (d == '.' && saw_num)
+        {
+          if (saw_dot)
+            {
+              num[nc] = '\0';
+
+              return new tok_const (new const_float (atof (num)));
+            }
+          else
+            {
+              saw_dot = true;
+              num[nc++] = d;
+            }
+        }
+
       if (isalpha (d) || (saw_var && isnumber (d)))
         {
           if (!saw_var)
@@ -207,7 +241,7 @@ tok_sm::gen ()
 }
 
 void
-print_tok_type (tok_type t)
+print_tok_type (const tok_type t)
 {
   switch (t)
     {
@@ -231,6 +265,9 @@ print_tok_type (tok_type t)
       break;
     case tok_type::TOK_EOF:
       printf ("TOK_EOF");
+      break;
+    case tok_type::TOK_CONST:
+      printf ("TOK_CONST");
       break;
     default:
       printf ("UNKNOWN");
@@ -265,6 +302,12 @@ print_token (const token *t)
     case tok_type::TOK_NL:
     case tok_type::TOK_EOF:
       // No extra info
+      break;
+    case tok_type::TOK_CONST:
+      {
+        printf (": ");
+        print_constt (static_cast<const tok_const *> (t)->c);
+      }
       break;
     default:
       printf (" (unknown)");

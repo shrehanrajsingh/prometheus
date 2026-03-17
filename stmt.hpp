@@ -60,7 +60,10 @@ public:
 class stmt_return : public stmt_t
 {
 public:
+  expr_t *val;
+
   stmt_return () : stmt_t (stmt_type::RETURN) {}
+  stmt_return (expr_t *_Val) : stmt_t (stmt_type::RETURN), val{ _Val } {}
   ~stmt_return () {}
 };
 

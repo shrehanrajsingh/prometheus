@@ -37,24 +37,68 @@ get_block (token **&t, size_t &size)
         }
     }
 
-  --t;
   //   print_token (*t);
-  size = t - u;
-  token **res = new token *[t - u];
+  size = --t - u;
+  token **res = new token *[size];
   std::copy (u, t, res);
+
+  return res;
+}
+
+token **
+get_line_toks (token **&t, size_t &size)
+{
+  int gb = 0;
+
+  token **u = t;
+  token *d = nullptr;
+
+  while (1)
+    {
+      d = *t++;
+
+      if (d->type == tok_type::TOK_EOF)
+        break;
+
+      if (d->type == tok_type::TOK_NL && !gb)
+        break;
+
+      if (d->type == tok_type::OPERATOR)
+        {
+          tok_operator *op = static_cast<tok_operator *> (d);
+
+          if (op->val == "(" || op->val == "{" || op->val == "[")
+            gb++;
+
+          if (op->val == ")" || op->val == "}" || op->val == "]")
+            gb--;
+        }
+    }
+
+  size = --t - u;
+  token **res = new token *[size];
+  std::copy (u, t, res);
+
   return res;
 }
 
 expr_t *
-ast_sm::gen_expr (token *start, token *end)
+ast_sm::gen_expr (token **start, token **end)
 {
   token *t;
   while (start < end)
     {
-      t = start++;
+      t = *start++;
 
       switch (t->type)
         {
+        case tok_type::TOK_CONST:
+          {
+            return new expr_const (
+                const_cast<const_t *> (static_cast<tok_const *> (t)->c));
+          }
+          break;
+
         case tok_type::BLOCK_SCOPE:
           {
           }
@@ -208,6 +252,13 @@ ast_sm::gen_one ()
                 return new stmt_fundecl (
                     static_cast<tok_identifier *> (t_name)->val, ap,
                     bsm.result);
+              }
+            else if (tkw->val == "return")
+              {
+                size_t sz = 0;
+                token **l = get_line_toks (t, sz);
+
+                return new stmt_return (gen_expr (l, l + sz));
               }
           }
           break;
