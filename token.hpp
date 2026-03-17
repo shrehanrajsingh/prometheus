@@ -1,5 +1,5 @@
-#if !defined(AST_H)
-#define AST_H
+#if !defined(TOKEN_H)
+#define TOKEN_H
 
 #include "header.hpp"
 #include "langsyntax.hpp"
@@ -66,7 +66,12 @@ public:
 class tok_blockscope : public token
 {
 public:
-  tok_blockscope () : token (tok_type::BLOCK_SCOPE) {}
+  bool is_open;
+  tok_blockscope () : token (tok_type::BLOCK_SCOPE), is_open{ false } {}
+  tok_blockscope (bool _Is_Open)
+      : token (tok_type::BLOCK_SCOPE), is_open{ _Is_Open }
+  {
+  }
   ~tok_blockscope () {}
 };
 
@@ -102,4 +107,4 @@ void print_tok_type (tok_type);
 void print_token (const token *);
 } // namespace pm
 
-#endif // AST_H
+#endif // TOKEN_H

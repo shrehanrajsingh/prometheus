@@ -38,6 +38,9 @@ test2 ()
     {
       pm::print_token (i);
     }
+
+  pm::ast_sm am (toks.data ());
+  am.gen ();
 }
 
 int

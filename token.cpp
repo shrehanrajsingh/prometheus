@@ -25,7 +25,7 @@ bool
 is_dtype (std::string_view d)
 {
   std::vector<std::string_view> a
-      = { "i32", "i64", "u32", "u64", "f32", "f64" };
+      = { "i32", "i64", "u32", "u64", "f32", "f64", "bool", "char" };
 
   for (auto &&i : a)
     if (i == d)
@@ -84,11 +84,18 @@ tok_sm::gen_one ()
             {
               var[vc] = '\0';
 
-              if (is_dtype (var))
-                return new tok_dtype (var);
-              if (is_keyword (var))
-                return new tok_keyword (var);
-              return new tok_identifier (var);
+              if (!strcmp (var, "then") || !strcmp (var, "end"))
+                {
+                  return new tok_blockscope (var[0] == 't');
+                }
+              else
+                {
+                  if (is_dtype (var))
+                    return new tok_dtype (var);
+                  if (is_keyword (var))
+                    return new tok_keyword (var);
+                  return new tok_identifier (var);
+                }
             }
         }
 
@@ -142,9 +149,19 @@ tok_sm::gen_one ()
   if (saw_var)
     {
       var[vc] = '\0';
-      if (is_keyword (var))
-        return new tok_keyword (var);
-      return new tok_identifier (var);
+
+      if (!strcmp (var, "then") || !strcmp (var, "end"))
+        {
+          return new tok_blockscope (var[0] == 't');
+        }
+      else
+        {
+          if (is_dtype (var))
+            return new tok_dtype (var);
+          if (is_keyword (var))
+            return new tok_keyword (var);
+          return new tok_identifier (var);
+        }
     }
 
   if (saw_op)

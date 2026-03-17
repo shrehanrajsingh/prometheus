@@ -1,5 +1,5 @@
 fun test -> i32
     a: i32
--
+then
     return a
--
+end
